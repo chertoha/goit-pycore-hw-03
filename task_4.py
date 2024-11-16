@@ -5,12 +5,19 @@ from pprint import pprint
 def get_upcoming_birthdays(users):
     
     current_date = datetime.today().date()
+    # current_date = datetime.strptime("1985.12.28", "%Y.%m.%d").date()
 
     res = []
 
     for user in users:
         date = datetime.strptime(user["birthday"], "%Y.%m.%d").date()
-        comparing_date = datetime(current_date.year, date.month, date.day).date()
+        
+        comparing_year = current_date.year
+        if(date.month, date.day) < (current_date.month, current_date.day):
+            comparing_year += 1
+
+        
+        comparing_date = datetime(comparing_year, date.month, date.day).date()
 
         if comparing_date < current_date or comparing_date >=  current_date + timedelta(days=7):
             continue
@@ -76,22 +83,22 @@ users = [
     
     {
         "name": "Jane Smith", 
-        "birthday": "1990.01.27"
+        "birthday": "1990.01.03"
     },
     
     {
         "name": "Jane Smith", 
-        "birthday": "1990.11.23"
-    },
-    
-    {
-        "name": "Jane Smith", 
-        "birthday": "1990.01.27"
+        "birthday": "1990.12.29"
     },
     
     {
         "name": "Jane Smith", 
         "birthday": "1990.01.27"
+    },
+    
+    {
+        "name": "Jane Smith", 
+        "birthday": "1990.12.31"
     },
     
     {
